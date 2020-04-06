@@ -5,11 +5,16 @@ using UnityEngine;
 public class CannonController : MonoBehaviour
 {
 
-    public GameObject Cannon;
+    public GameObject cannon;
+    public Transform firePoint;
+    public GameObject bullet;
     public float rotationRotater = 1;
     public float rotationCannon = 1;
-    public float xU=0.85f;
-    public float xD=0.55f;
+    public float bulletPower;
+    public float fireRate = 1.0f;
+    private float _nextFire;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +25,7 @@ public class CannonController : MonoBehaviour
     void Update()
     {
         Rotate();
-       
+        Fire();
     }
 
     void Rotate()
@@ -38,18 +43,29 @@ public class CannonController : MonoBehaviour
 
         }
 
-        Debug.Log(Cannon.transform.rotation.x);
-        if (Input.GetKey("w") && Cannon.transform.rotation.x > xU)
+        if (Input.GetKey("w") && cannon.transform.rotation.x > -0.3)
         {
-            Cannon.transform.Rotate(new Vector3(-rotationCannon, 0, 0));
+            cannon.transform.Rotate(new Vector3(-rotationCannon, 0, 0));
 
         }
-        else if (Input.GetKey("s") && Cannon.transform.rotation.x <xD)
+        else if (Input.GetKey("s") && cannon.transform.rotation.x <0.1)
         {
-            Cannon.transform.Rotate(new Vector3(rotationCannon, 0, 0));
+            cannon.transform.Rotate(new Vector3(rotationCannon, 0, 0));
 
         }
 
 
     }
+
+    void Fire() 
+    {
+        if (Input.GetKeyDown("x") && Time.time > _nextFire)
+        {
+            _nextFire = Time.time + fireRate;
+            GameObject b = Instantiate(bullet, firePoint.position, firePoint.rotation);
+            Rigidbody rb = b.GetComponent<Rigidbody>();
+            rb.AddRelativeForce(new Vector3(0, 0, bulletPower));
+        }
+    }
+
 }
