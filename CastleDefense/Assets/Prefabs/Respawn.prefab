@@ -43,8 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18329fcf44b7087489904018850f69ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxEnemyNumber: 3
-  maxEnememyNumberOnScane: 2
+  enemyNumber: 0
+  enemyNumberOnScene: 0
+  maxEnemyNumber: 2
+  maxEnememyNumberOnScane: 1
   enemyPrefab: {fileID: 8139149214315024326, guid: 3989d76e4e90a1341b092dc63919b5f5,
     type: 3}
-  respawnRate: 2
+  groundEffect: {fileID: 0}
+  colorFadeDampner: 1
+  respawnRateMin: 5
+  respawnRateMax: 15

@@ -13,6 +13,7 @@ public class CannonController : MonoBehaviour
     public float bulletPower;
     public float fireRate = 1.0f;
     private float _nextFire;
+    public ParticleSystem fireEffect;
 
 
     // Start is called before the first frame update
@@ -63,6 +64,7 @@ public class CannonController : MonoBehaviour
         {
             _nextFire = Time.time + fireRate;
             GameObject b = Instantiate(bullet, firePoint.position, firePoint.rotation);
+            Instantiate(fireEffect, firePoint.position, firePoint.rotation);
             Rigidbody rb = b.GetComponent<Rigidbody>();
             rb.AddRelativeForce(new Vector3(0, 0, bulletPower));
         }

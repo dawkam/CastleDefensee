@@ -9,15 +9,21 @@ public class Respawn : MonoBehaviour
     public int maxEnemyNumber;
     public int maxEnememyNumberOnScane;
     public GameObject enemyPrefab;
+    public ParticleSystem groundEffect;
 
+    public float colorFadeRatio=1;
     public float respawnRateMin = 5.0f;
     public float respawnRateMax = 15.0f;
     private float _nextRespawn;
     private float _respawnRate;
 
+    private Color baseColor;
+
+
     void Start() 
     {
         enemyNumber = maxEnemyNumber;
+        baseColor = groundEffect.startColor;
     }
 
     void Update()
@@ -29,9 +35,18 @@ public class Respawn : MonoBehaviour
             Time.time > _nextRespawn)
         {
             _nextRespawn = Time.time + _respawnRate;
-           enemyNumber--;
+            enemyNumber--;
             Instantiate(enemyPrefab, this.transform);
+
         }
+        else if(enemyNumber==0)
+        {
+           
+            groundEffect.startColor -= groundEffect.startColor * colorFadeRatio * Time.deltaTime;
+
+
+        }
+
 
     }
 
@@ -43,6 +58,7 @@ public class Respawn : MonoBehaviour
         {
             e.InsatnDie();
         }
+        groundEffect.startColor = baseColor;
     }
 
 
@@ -50,5 +66,8 @@ public class Respawn : MonoBehaviour
     {
         maxEnemyNumber += 2;
         enemyNumber = maxEnemyNumber;
+        groundEffect.startColor = baseColor;
     }
+
+
 }
